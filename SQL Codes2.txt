@@ -1,0 +1,28 @@
+CREATE TABLE `auto_shop`.`admin` (`Administrator_ID` INT NOT NULL AUTO_INCREMENT , `Fullname` TEXT NOT NULL , `Email_Address` TEXT NOT NULL , `Password` TEXT NOT NULL , PRIMARY KEY (`Administrator_ID`), UNIQUE (`Email_Address`)) ENGINE = InnoDB;
+
+CREATE TABLE `auto_shop`.`customers` (`Customer_ID` INT NOT NULL AUTO_INCREMENT , `Fullname` TEXT NOT NULL , `Email_Address` TEXT NOT NULL , `Phone_Number` TEXT NOT NULL , `Image` TEXT NOT NULL , `Password` TEXT NOT NULL , PRIMARY KEY (`Customer_ID`), UNIQUE (`Email_Address`)) ENGINE = InnoDB;
+
+CREATE TABLE `auto_shop`.`cars` (`Car_ID` INT NOT NULL AUTO_INCREMENT , `Model` TEXT NOT NULL , `Quantity` TEXT NOT NULL , `Purchase_Price` DOUBLE NOT NULL , `Image` TEXT NOT NULL , PRIMARY KEY (`Car_ID`)) ENGINE = InnoDB;
+
+CREATE TABLE `auto_shop`.`orders` (`Order_ID` INT NOT NULL AUTO_INCREMENT , `Customer_ID` INT NOT NULL , `Car_ID` INT NOT NULL , `Date_Time` TIMESTAMP NOT NULL , `Status` ENUM('Pending','Cancelled','Completed') NOT NULL , PRIMARY KEY (`Order_ID`)) ENGINE = InnoDB;
+
+ALTER TABLE `orders` ADD `Purchase_Price` DOUBLE NOT NULL AFTER `Date_Time`;
+
+ALTER TABLE `orders` ADD `Quantity` INT NOT NULL AFTER `Purchase_Price`;
+
+CREATE TABLE `auto_shop`.`rent` (`Rent_ID` INT NOT NULL AUTO_INCREMENT , `Customer_ID` INT NOT NULL , `Car_ID` INT NOT NULL , `Total_Price` DOUBLE NOT NULL , `Start_Date` DATE NOT NULL , `End_Date` DATE NOT NULL ,`Number_of_Months` INT NOT NULL , `Status` TEXT NOT NULL , PRIMARY KEY (`Rent_ID`)) ENGINE = InnoDB;
+
+CREATE TABLE `auto_shop`.`chauffeur` (`ID` INT NOT NULL AUTO_INCREMENT , `Name` TEXT NOT NULL , `Email_Address` TEXT NOT NULL , PRIMARY KEY (`ID`)) ENGINE = InnoDB;
+
+CREATE TABLE `auto_shop`.`pickup` (`Pickup_ID` INT NOT NULL AUTO_INCREMENT , `Chauffeur_ID` INT NOT NULL , `Car_ID` INT NOT NULL , `Long` TEXT NOT NULL , `Lat` TEXT NOT NULL , PRIMARY KEY (`Pickup_ID`)) ENGINE = InnoDB;
+
+ALTER TABLE `pickup` ADD `Customer_ID` INT NOT NULL AFTER `Pickup_ID`;
+
+ALTER TABLE `cars` ADD `Description` TEXT NOT NULL AFTER `Quantity`, ADD `Category` TEXT NOT NULL AFTER `Description`;
+
+ALTER TABLE `cars` ADD `Rent_Price` DOUBLE NOT NULL AFTER `Purchase_Price`;
+
+ALTER TABLE `rent` ADD `Quantity` INT NOT NULL AFTER `Number_of_Months`;
+
+INSERT INTO `admin`(`Administrator_ID`, `Fullname`, `Email_Address`, `Password`) VALUES ('NULL','Administrator One','admin@gmail.com',md5('12345678'));
+
